@@ -86,7 +86,7 @@ class UpdateCertificatesCommandEndToEndTest extends TestCase
                 $expectedParams = [
                     'cert'   => "foo\n",
                     'key'    => "bar\n",
-                    'snis' => ['foo.bar'],
+                    'snis' => [],
                 ];
 
                 self::assertEquals($expectedParams, $argument['json']);
@@ -141,7 +141,6 @@ class UpdateCertificatesCommandEndToEndTest extends TestCase
                     'cert'   => "foo\n",
                     'key'    => "bar\n",
                     'snis' => [
-                        'foo.bar',
                         'lalala.com',
                     ],
                 ];

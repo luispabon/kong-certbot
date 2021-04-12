@@ -39,6 +39,8 @@ class Handler
      */
     public function store(Certificate $certificate, string $kongAdminUri): bool
     {
+        $domains = $certificate->getDomains();
+        $mainDomain = array_shift($domains);
         $payload = [
             'headers' => [
                 'accept' => 'application/json',
@@ -46,7 +48,7 @@ class Handler
             'json'    => [
                 'cert' => $certificate->getCert(),
                 'key'  => $certificate->getKey(),
-                'snis' => $certificate->getDomains(),
+                'snis' => $domains,
             ],
         ];
 
@@ -56,7 +58,7 @@ class Handler
         try {
             $this->guzzle->request(
                 'put',
-                \sprintf('%s/certificates/%s', $kongAdminUri, $certificate->getDomains()[0]),
+                \sprintf('%s/certificates/%s', $kongAdminUri, $mainDomain),
                 $payload
             );
         } catch (BadResponseException $ex) {

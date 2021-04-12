@@ -57,7 +57,7 @@ class HandlerTest extends TestCase
                 'json'    => [
                     'cert' => 'foo',
                     'key'  => 'bar',
-                    'snis' => ['foo.bar'],
+                    'snis' => [],
                 ],
             ])
             ->willReturn($response);
@@ -79,14 +79,14 @@ class HandlerTest extends TestCase
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('put', self::KONG_ADMIN_URI . '/certificates/' . $domains[0], [
+            ->with('put', self::KONG_ADMIN_URI . '/certificates/foo.bar', [
                 'headers' => [
                     'accept' => 'application/json',
                 ],
                 'json'    => [
                     'cert' => 'foo',
                     'key'  => 'bar',
-                    'snis' => $domains,
+                    'snis' => ['bar.foo', 'doom.bar'],
                 ],
             ])
             ->willReturn($response);
